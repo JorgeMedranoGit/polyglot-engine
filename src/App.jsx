@@ -1,8 +1,8 @@
-//* * * COMPONENTE PRINCIPAL Y CONTROLES DEL MOTOR KIRO POLYGLOT * * *
+// * * * COMPONENTE PRINCIPAL Y CONTROLES DEL MOTOR KIRO POLYGLOT * * *
 import React, { useState } from 'react';
 import confetti from 'canvas-confetti';
 
-//* * * IMPORTACION DE COMPONENTES DE LA INTERFAZ Y SERVICIOS * * *
+// * * * IMPORTACION DE COMPONENTES DE LA INTERFAZ Y SERVICIOS * * *
 import Navbar from './components/Navbar';
 import ArchitectureGraph from './components/ArchitectureGraph';
 import CodeEditor from './components/CodeEditor';
@@ -16,13 +16,13 @@ import { SAMPLE_PROJECTS } from './data/sampleProjects';
 import { transpileProjectWithBedrock } from './services/bedrockService';
 
 export default function App() {
-  //* * * ESTADOS GLOBALES DE NAVEGACION Y PROYECTO * * *
+  // * * * ESTADOS GLOBALES DE NAVEGACION Y PROYECTO * * *
   const [projectsList, setProjectsList] = useState(SAMPLE_PROJECTS);
   const [selectedProject, setSelectedProject] = useState(null);
   const [activeTab, setActiveTab] = useState('editor');
   const [lang, setLang] = useState('es');
 
-  //* * * ESTADOS DE EJECUCION DE TRANSPILACIÓN Y PIPELINE EN VIVO * * *
+  // * * * ESTADOS DE EJECUCION DE TRANSPILACIÓN Y PIPELINE EN VIVO * * *
   const [isTranspiling, setIsTranspiling] = useState(false);
   const [activeNodeIndex, setActiveNodeIndex] = useState(-1);
   const [transpiledCode, setTranspiledCode] = useState('');
@@ -31,13 +31,13 @@ export default function App() {
   const [isAwsModalOpen, setIsAwsModalOpen] = useState(false);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
 
-  //* * * ESTADOS DE METRICAS DEL PIPELINE * * *
+  // * * * ESTADOS DE METRICAS DEL PIPELINE * * *
   const [pipelinePhase, setPipelinePhase] = useState(1);
   const [pipelinePercent, setPipelinePercent] = useState(0);
   const [pipelineMessage, setPipelineMessage] = useState('');
   const [liveTokens, setLiveTokens] = useState(0);
 
-  //* * * CONFIGURACION DE CREDENCIALES AWS BEDROCK * * *
+  // * * * CONFIGURACION DE CREDENCIALES AWS BEDROCK * * *
   const [awsConfig, setAwsConfig] = useState({
     region: import.meta.env.VITE_AWS_REGION || 'us-east-1',
     accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID || '',
@@ -47,12 +47,12 @@ export default function App() {
 
   const awsConfigured = Boolean(awsConfig.accessKeyId && awsConfig.secretAccessKey);
 
-  //* * * CAMBIO DE IDIOMA ENTRE ESPAÑOL E INGLES * * *
+  // * * * CAMBIO DE IDIOMA ENTRE ESPAÑOL E INGLES * * *
   const toggleLanguage = () => {
     setLang(prev => (prev === 'es' ? 'en' : 'es'));
   };
 
-  //* * * MANEJADORES DE SELECCION Y CARGA DE PROYECTOS * * *
+  // * * * MANEJADORES DE SELECCION Y CARGA DE PROYECTOS * * *
   const handleSelectProject = (project) => {
     setSelectedProject(project);
     setTranspiledCode('');
@@ -72,7 +72,7 @@ export default function App() {
     handleSelectProject(SAMPLE_PROJECTS[0]);
   };
 
-  //* * * INICIO DEL PROCESO DE TRANSPILACION RECURSIVA CON AWS BEDROCK * * *
+  // * * * INICIO DEL PROCESO DE TRANSPILACION RECURSIVA CON AWS BEDROCK * * *
   const handleStartTranspilation = async () => {
     if (!selectedProject) return;
     setIsTranspiling(true);
@@ -82,7 +82,7 @@ export default function App() {
     setPipelinePercent(10);
     setLiveTokens(45);
 
-    //* * * ETAPAS DEL PIPELINE DE TRANSPILACION EN VIVO * * *
+    // * * * ETAPAS DEL PIPELINE DE TRANSPILACION EN VIVO * * *
     const phaseSteps = [
       { phase: 1, pct: 25, msg: `Escaneando todos los ${selectedProject.fileTree ? selectedProject.fileTree.length : 1} archivos del proyecto...`, tokens: 120 },
       { phase: 2, pct: 50, msg: "Construyendo el Grafo Semántico de Funciones e Invariantes...", tokens: 280 },
@@ -103,7 +103,7 @@ export default function App() {
       }
     }, 600);
 
-    //* * * INVOCACION AL SERVICIO RECURSIVO DE TRANSPILACION * * *
+    // * * * INVOCACION AL SERVICIO RECURSIVO DE TRANSPILACION * * *
     const result = await transpileProjectWithBedrock({
       sourceCode: selectedProject.sourceCode,
       fileTree: selectedProject.fileTree,
@@ -123,7 +123,7 @@ export default function App() {
     setIsTranspiling(false);
     setPipelinePercent(100);
 
-    //* * * CELEBRACION Y GUARDADO DEL RESULTADO EXITOSO * * *
+    // * * * CELEBRACION Y GUARDADO DEL RESULTADO EXITOSO * * *
     if (result.success) {
       setTranspiledCode(result.code || selectedProject.targetCode);
       setTranspiledSuccess(true);
@@ -141,7 +141,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#1e1e2e] text-[#cdd6f4] flex flex-col font-sans selection:bg-[#cba6f7] selection:text-[#11111b]">
       
-      //* * * BARRA DE NAVEGACION SUPERIOR * * *
+      {/* * * * BARRA DE NAVEGACION SUPERIOR * * * */}
       <Navbar
         projects={projectsList}
         selectedProject={selectedProject}
@@ -159,7 +159,7 @@ export default function App() {
         onToggleLang={toggleLanguage}
       />
 
-      //* * * AREA DE TRABAJO PRINCIPAL * * *
+      {/* * * * AREA DE TRABAJO PRINCIPAL * * * */}
       <main className="flex-1 max-w-7xl w-full mx-auto p-4 flex flex-col justify-start">
         
         {!selectedProject ? (
@@ -226,7 +226,7 @@ export default function App() {
 
       </main>
 
-      //* * * MODAL DE CONFIGURACION CREDENCIALES AWS * * *
+      {/* * * * MODAL DE CONFIGURACION CREDENCIALES AWS * * * */}
       <AwsConfigModal
         isOpen={isAwsModalOpen}
         onClose={() => setIsAwsModalOpen(false)}
@@ -234,7 +234,7 @@ export default function App() {
         onSaveConfig={(newConfig) => setAwsConfig(newConfig)}
       />
 
-      //* * * MODAL DE CARGA DE PROYECTOS * * *
+      {/* * * * MODAL DE CARGA DE PROYECTOS * * * */}
       <ProjectUploadModal
         isOpen={isUploadModalOpen}
         onClose={() => setIsUploadModalOpen(false)}

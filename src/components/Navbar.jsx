@@ -1,4 +1,4 @@
-//* * * COMPONENTE DE NAVEGACIÓN Y CONTROLES DEL ENTORNO IDE * * *
+// * * * COMPONENTE DE NAVEGACIÓN Y CONTROLES DEL ENTORNO IDE * * *
 import React from 'react';
 import { Cpu, Play, CheckCircle, Upload, Settings, RefreshCw, Code2, Network, ArrowRightLeft, BarChart3, Globe } from 'lucide-react';
 import { TRANSLATIONS } from '../data/translations';
@@ -19,10 +19,10 @@ export default function Navbar({
   lang,
   onToggleLang
 }) {
-  //* * * CARGA DE TRADUCCIONES SEGUN EL IDIOMA SELECCIONADO * * *
+  // * * * CARGA DE TRADUCCIONES SEGUN EL IDIOMA SELECCIONADO * * *
   const t = TRANSLATIONS[lang] || TRANSLATIONS.es;
 
-  //* * * PESTAÑAS PRINCIPALES DEL WORKBENCH * * *
+  // * * * PESTAÑAS PRINCIPALES DEL WORKBENCH * * *
   const tabs = [
     { id: 'editor', label: t.tabEditor, icon: Code2 },
     { id: 'graph', label: t.tabGraph, icon: Network },
@@ -33,10 +33,10 @@ export default function Navbar({
   return (
     <header className="bg-[#1e1e2e] border-b border-[#313244] sticky top-0 z-40 select-none">
       
-      //* * * BARRA DE CONTROL SUPERIOR * * *
+      {/* * * * BARRA DE CONTROL SUPERIOR * * * */}
       <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between gap-4">
         
-        //* * * TITULO DE MARCA Y LOGO * * *
+        {/* * * * TITULO DE MARCA Y LOGO * * * */}
         <div className="flex items-center gap-3">
           <button
             onClick={onResetProject}
@@ -51,7 +51,7 @@ export default function Navbar({
             </div>
           </button>
 
-          //* * * SELECTOR DESPLEGABLE DE PROYECTOS * * *
+          {/* * * * SELECTOR DESPLEGABLE DE PROYECTOS * * * */}
           <div className="hidden md:flex items-center gap-2 ml-4 pl-4 border-l border-[#313244]">
             <select
               value={selectedProject?.id || ''}
@@ -79,10 +79,10 @@ export default function Navbar({
           </div>
         </div>
 
-        //* * * CONTROLES DE ACCION Y SELECTOR DE IDIOMA * * *
+        {/* * * * CONTROLES DE ACCION Y SELECTOR DE IDIOMA * * * */}
         <div className="flex items-center gap-2.5">
           
-          //* * * BOTON SELECTOR DE IDIOMA ES / EN * * *
+          {/* * * * BOTON SELECTOR DE IDIOMA ES / EN * * * */}
           <button
             onClick={onToggleLang}
             className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#181825] border border-[#313244] text-xs font-bold text-[#cba6f7] hover:border-[#cba6f7] transition-all"
@@ -92,7 +92,7 @@ export default function Navbar({
             <span>{lang.toUpperCase()}</span>
           </button>
 
-          //* * * BOTON DE CONFIGURACION AWS * * *
+          {/* * * * BOTON DE CONFIGURACION AWS * * * */}
           <button
             onClick={onOpenAwsConfig}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border transition-all ${
@@ -105,7 +105,7 @@ export default function Navbar({
             <span>{awsConfigured ? t.awsConfigured : t.configureAws}</span>
           </button>
 
-          //* * * BOTON PRINCIPAL DE ACCION TRANSPILAR A AWS * * *
+          {/* * * * BOTON PRINCIPAL DE ACCION TRANSPILAR A AWS * * * */}
           {selectedProject && (
             <button
               onClick={onStartTranspilation}
@@ -130,7 +130,7 @@ export default function Navbar({
 
       </div>
 
-      //* * * BARRA INFERIOR DE PESTAÑAS DEL WORKBENCH * * *
+      {/* * * * BARRA INFERIOR DE PESTAÑAS DEL WORKBENCH * * * */}
       {selectedProject && (
         <div className="border-t border-[#313244] bg-[#181825]">
           <div className="max-w-7xl mx-auto px-4 flex items-center gap-1">

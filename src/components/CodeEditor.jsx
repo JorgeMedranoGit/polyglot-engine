@@ -1,14 +1,14 @@
-//* * * COMPONENTE EDITOR DE CODIGO LADO A LADO Y EXPORTADOR ZIP * * *
+// * * * COMPONENTE EDITOR DE CODIGO LADO A LADO Y EXPORTADOR ZIP * * *
 import React, { useState, useEffect } from 'react';
 import { Code2, Copy, Check, FolderTree, FileCode, Upload, Archive } from 'lucide-react';
 import JSZip from 'jszip';
 import { TRANSLATIONS } from '../data/translations';
 
 export default function CodeEditor({ project, transpiledCode, isTranspiling, isVerified, providerName, onUploadCode, lang = 'es' }) {
-  //* * * CARGA DE TRADUCCIONES SEGUN EL IDIOMA * * *
+  // * * * CARGA DE TRADUCCIONES SEGUN EL IDIOMA * * *
   const t = TRANSLATIONS[lang] || TRANSLATIONS.es;
 
-  //* * * ESTADOS INTERNOS DE COPIADO Y PESTAÑAS DEL EDITOR * * *
+  // * * * ESTADOS INTERNOS DE COPIADO Y PESTAÑAS DEL EDITOR * * *
   const [copiedLegacy, setCopiedLegacy] = useState(false);
   const [copiedTarget, setCopiedTarget] = useState(false);
   const [activeTab, setActiveTab] = useState('editor');
@@ -17,14 +17,14 @@ export default function CodeEditor({ project, transpiledCode, isTranspiling, isV
   const [selectedFile, setSelectedFile] = useState(fileTree[0]);
   const [isZipping, setIsZipping] = useState(false);
 
-  //* * * SINCRONIZACION DEL ARCHIVO SELECCIONADO AL CAMBIAR PROYECTO * * *
+  // * * * SINCRONIZACION DEL ARCHIVO SELECCIONADO AL CAMBIAR PROYECTO * * *
   useEffect(() => {
     if (project.fileTree && project.fileTree.length > 0) {
       setSelectedFile(project.fileTree[0]);
     }
   }, [project]);
 
-  //* * * OBTENCION DINAMICA DEL CODIGO FUENTE ACTIVO * * *
+  // * * * OBTENCION DINAMICA DEL CODIGO FUENTE ACTIVO * * *
   const getActiveSourceCode = () => {
     if (!selectedFile) return project.sourceCode;
     if (selectedFile.source) return selectedFile.source;
@@ -32,14 +32,14 @@ export default function CodeEditor({ project, transpiledCode, isTranspiling, isV
     return project.sourceCode;
   };
 
-  //* * * OBTENCION DINAMICA DEL CODIGO TRANSPILADO ACTIVO * * *
+  // * * * OBTENCION DINAMICA DEL CODIGO TRANSPILADO ACTIVO * * *
   const getActiveTargetCode = () => {
     if (transpiledCode && selectedFile?.name === fileTree[0]?.name) return transpiledCode;
     if (selectedFile && selectedFile.target) return selectedFile.target;
     return project.targetCode;
   };
 
-  //* * * MANEJADOR DE COPIADO AL PORTAPAPELES * * *
+  // * * * MANEJADOR DE COPIADO AL PORTAPAPELES * * *
   const handleCopy = (text, type) => {
     navigator.clipboard.writeText(text);
     if (type === 'legacy') {
@@ -51,7 +51,7 @@ export default function CodeEditor({ project, transpiledCode, isTranspiling, isV
     }
   };
 
-  //* * * GENERACION Y DESCARGA DEL ARCHIVO BUNDLE ZIP EN EL CLIENTE * * *
+  // * * * GENERACION Y DESCARGA DEL ARCHIVO BUNDLE ZIP EN EL CLIENTE * * *
   const handleDownloadTranspiledZip = async () => {
     setIsZipping(true);
     const zip = new JSZip();
@@ -61,7 +61,7 @@ export default function CodeEditor({ project, transpiledCode, isTranspiling, isV
     const folderName = `transpiled-${cleanName}`;
     const projectFolder = zip.folder(folderName);
 
-    //* * * EMPAQUETADO DE ARCHIVOS EN LA ESTRUCTURA RUST * * *
+    // * * * EMPAQUETADO DE ARCHIVOS EN LA ESTRUCTURA RUST * * *
     fileTree.forEach((file) => {
       const ext = isRust ? (file.name.endsWith('.xml') ? 'toml' : 'rs') : (file.name.endsWith('.xml') ? 'json' : 'ts');
       const transpiledFileName = file.name.endsWith('.xml') ? 'Cargo.toml' : file.name.replace(/\.(java|py|cs|js)$/, `.${ext}`);
@@ -93,14 +93,14 @@ export default function CodeEditor({ project, transpiledCode, isTranspiling, isV
     setIsZipping(false);
   };
 
-  //* * * SOPORTE PARA SCROLL HORIZONTAL CON LA RUEDA DEL MOUSE * * *
+  // * * * SOPORTE PARA SCROLL HORIZONTAL CON LA RUEDA DEL MOUSE * * *
   const handleHorizontalWheel = (e) => {
     if (e.deltaY) {
       e.currentTarget.scrollLeft += e.deltaY;
     }
   };
 
-  //* * * RENDERIZADO HIGHLIGHTED DE LINEAS DE CODIGO Y OPTIMIZACIONES * * *
+  // * * * RENDERIZADO HIGHLIGHTED DE LINEAS DE CODIGO Y OPTIMIZACIONES * * *
   const renderCodeLines = (code, isLegacy = false) => {
     const lines = (code || '').trim().split('\n');
     return lines.map((line, i) => {
@@ -128,7 +128,7 @@ export default function CodeEditor({ project, transpiledCode, isTranspiling, isV
   return (
     <div className="space-y-3 animate-fade-in">
       
-      //* * * BARRA DE HERRAMIENTAS SUB-HEADER * * *
+      {/* * * * BARRA DE HERRAMIENTAS SUB-HEADER * * * */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3 bg-[#1e1e2e] border border-[#313244] rounded-xl p-2.5">
         <div className="flex items-center gap-1.5">
           <button
@@ -165,7 +165,7 @@ export default function CodeEditor({ project, transpiledCode, isTranspiling, isV
         </button>
       </div>
 
-      //* * * VISTA DEL ARBOL DE ARCHIVOS * * *
+      {/* * * * VISTA DEL ARBOL DE ARCHIVOS * * * */}
       {activeTab === 'explorer' && (
         <div className="bg-[#1e1e2e] border border-[#313244] rounded-xl p-4 animate-fade-in">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2">
@@ -190,10 +190,10 @@ export default function CodeEditor({ project, transpiledCode, isTranspiling, isV
         </div>
       )}
 
-      //* * * EDITORES DE CODIGO LADO A LADO * * *
+      {/* * * * EDITORES DE CODIGO LADO A LADO * * * */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
         
-        //* * * PANEL IZQUIERDO: CODIGO FUENTE (ORIGEN) * * *
+        {/* * * * PANEL IZQUIERDO: CODIGO FUENTE (ORIGEN) * * * */}
         <div className="bg-[#1e1e2e] rounded-xl border border-[#313244] overflow-hidden flex flex-col h-[520px]">
           <div className="bg-[#181825] px-3.5 py-2 border-b border-[#313244] flex items-center justify-between gap-2">
             <div className="flex items-center gap-2 min-w-0">
@@ -239,7 +239,7 @@ export default function CodeEditor({ project, transpiledCode, isTranspiling, isV
           </div>
         </div>
 
-        //* * * PANEL DERECHO: CODIGO TRANSPILADO (DESTINO AWS SERVERLESS) * * *
+        {/* * * * PANEL DERECHO: CODIGO TRANSPILADO (DESTINO AWS SERVERLESS) * * * */}
         <div className="bg-[#1e1e2e] rounded-xl border border-[#313244] overflow-hidden flex flex-col h-[520px]">
           <div className="bg-[#181825] px-3.5 py-2 border-b border-[#313244] flex items-center justify-between gap-2">
             <div className="flex items-center gap-2 min-w-0">
