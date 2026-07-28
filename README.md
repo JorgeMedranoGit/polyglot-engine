@@ -1,85 +1,79 @@
-# 🚀 Kiro-PolyGlot Engine
-### Full-System Semantic Transpiler & AWS Cloud Architecture Migrator
+# ⚡ Kiro PolyGlot Engine
 
-> **Hackathon IA Masivo Online AWS por Código Facilito (Kiro + AWS)**  
-> **Vertical**: Productividad para Desarrolladores / Aplicaciones Web  
-> **Nivel de Innovación**: Doctorado en Ciencias de la Computación (Neural-Symbolic ASG & Semantic Equivalence Verification)
+> **AWS Serverless Full-System Semantic Transpiler**  
+> Modernización automatizada de monolitos legados en Java Spring Boot hacia arquitecturas Serverless ultraligeras en AWS Rust y TypeScript con Amazon Bedrock.
 
 ---
 
-## 📌 Problema Real de la Industria
-La migración de software monolítico *legacy* (Python Flask, Java Spring, COBOL) a arquitecturas modernas Serverless en la nube (**AWS Lambda + Amazon DynamoDB**) suele tardar meses o años de refactorización manual. 
+## 🔑 Configuración de Variables de Entorno (`.env`)
 
-Los transpiladores tradicionales fallan porque solo traducen sintaxis línea por línea de forma aislada, rompiendo dependencias del sistema, bloqueos de concurrencia e invariantes de datos.
+El proyecto incluye un archivo de plantilla **`.env.example`**. Para configurar tus credenciales de AWS Bedrock localmente:
 
-## 💡 Nuestra Solución
-**Kiro-PolyGlot Engine** es un super-transpilador que opera sobre la **funcionalidad completa del sistema**:
-1. **System-Wide Abstract Semantic Graph (ASG)**: Ingiere la totalidad de los módulos, modelos y rutas del proyecto para construir un mapa topológico de dependencias.
-2. **Refactorización de Arquitectura Nube**: Convierte patrones síncronos bloqueantes en llamadas asíncronas optimizadas para **AWS Lambda** y **Amazon DynamoDB**.
-3. **Verificación de Equivalencia Semántica**: Ejecuta *Differential Testing* en un sandbox síncrono para garantizar cero regresiones y 100% de coincidencia funcional.
-4. **Integración con Amazon Bedrock & Kiro**: Utiliza modelos **Claude 3.5 Sonnet** vía `@aws-sdk/client-bedrock-runtime` y conectores con el IDE Kiro.
-
----
-
-## 🛠️ Arquitectura en AWS y Kiro
-
-```mermaid
-graph TD
-    A["Legacy Monolith Project (Python/Java)"] --> B["Kiro-PolyGlot ASG Parser"]
-    B --> C["AWS Bedrock (Claude 3.5 Sonnet)"]
-    C --> D["Serverless Target Generator"]
-    D --> E["AWS Lambda Handler (TypeScript/Rust)"]
-    D --> F["Amazon DynamoDB Data Bindings"]
-    E --> G["Differential Execution Verification Sandbox"]
-    G --> H["Live Telemetry & ROI Dashboard (-84% RAM, 6.2x Speed)"]
-```
-
-* **Amazon Bedrock**: Razonamiento semántico profundo sobre el árbol de dependencias completo.
-* **AWS Lambda**: Ejecución de handlers asíncronos ultrarrápidos.
-* **Amazon DynamoDB**: Almacenamiento persistente no bloqueante de entidades.
-* **Kiro AI Plugin**: Extensión para invocar transpilaciones de sistema desde el IDE.
-
----
-
-## 📊 Telemetría de Rendimiento Medida en Demo
-
-| Métrica | Monolito Origen (Legacy) | AWS Serverless Target (Transpilado) | Mejora / Ahorro |
-| :--- | :--- | :--- | :--- |
-| **Memoria RAM** | 512 MB | 82 MB | **-84% Consumo** |
-| **Latencia P95** | 340 ms | 55 ms | **6.2x Más Rápido** |
-| **Throughput (TPS)** | 180 req/sec | 1,120 req/sec | **+522% Capacidad** |
-| **Costo Nube Estimado** | $240/mes (EC2) | $52/mes (Lambda + DynamoDB) | **-78% Costo AWS** |
-
----
-
-## 🚀 Instalación y Ejecución Local
-
-### Prerrequisitos
-- Node.js v18+ y npm
-
-### Pasos
-1. **Clonar el repositorio e instalar dependencias**:
-   ```bash
-   git clone https://github.com/tu-usuario/kiro-polyglot-engine.git
-   cd kiro-polyglot-engine
-   npm install
-   ```
-
-2. **Configurar Credenciales de AWS Bedrock (Opcional)**:
-   Copia el archivo `.env.example` a `.env`:
+1. Crea un archivo `.env` en la raíz del proyecto basado en `.env.example`:
    ```bash
    cp .env.example .env
    ```
-   Agrega tu `VITE_AWS_ACCESS_KEY_ID`, `VITE_AWS_SECRET_ACCESS_KEY` y `VITE_AWS_REGION`.  
-   *(Si dejas el archivo `.env` en blanco, el sistema correrá automáticamente en **Modo Demo de Alta Fidelidad** sin consumir cuota).*
 
-3. **Iniciar Servidor de Desarrollo**:
-   ```bash
-   npm run dev
+2. Agrega tus credenciales y configuración de AWS Bedrock:
+   ```env
+   VITE_AWS_REGION=us-east-1
+   VITE_AWS_ACCESS_KEY_ID=tu_access_key_id
+   VITE_AWS_SECRET_ACCESS_KEY=tu_secret_access_key
+   VITE_AWS_BEDROCK_MODEL_ID=anthropic.claude-3-5-sonnet-20240620-v1:0
    ```
-   Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
+
+> 🔒 **Nota de Seguridad**: El archivo `.env` está estrictamente ignorado por `.gitignore` para no subir credenciales privadas al repositorio. Además, las credenciales se pueden configurar dinámicamente desde el botón **"Configurar AWS"** en la interfaz sin necesidad de modificar archivos.
 
 ---
 
-## 👥 Equipo y Créditos
-Proyecto desarrollado para el **Hackathon IA Masivo Online AWS por Código Facilito (Kiro + AWS)**.
+## 🚀 Guía de Despliegue en Render (Render Deployment)
+
+Para desplegar este proyecto en **Render (Static Site)**:
+
+1. Conecta este repositorio en tu panel de [Render Dashboard](https://dashboard.render.com).
+2. Configura los siguientes parámetros de compilación:
+   * **Branch**: `main`
+   * **Build Command**: `npm install && npm run build`
+   * **Publish Directory**: `dist`
+3. Variables de Entorno en Render (Opcional):
+   * `VITE_AWS_REGION`: `us-east-1`
+   * `VITE_AWS_BEDROCK_MODEL_ID`: `anthropic.claude-3-5-sonnet-20240620-v1:0`
+
+---
+
+## 💻 Desarrollo Local
+
+```bash
+# 1. Clonar el repositorio
+git clone https://github.com/JorgeMedranoGit/polyglot-engine.git
+cd polyglot-engine
+
+# 2. Instalar dependencias
+npm install
+
+# 3. Iniciar servidor de desarrollo en vivo
+npm run dev
+```
+
+Abre tu navegador en `http://localhost:3000/`.
+
+---
+
+## 📁 Ejemplos Incluidos (`examples/`)
+
+El repositorio incluye dos carpetas de ejemplo listas para inspección:
+
+* ☕ **[`examples/original-java-monolith/`](./examples/original-java-monolith/)**: Monolito en Java 17 Spring Boot con bloqueos JDBC y huella de 512MB RAM.
+* 🦀 **[`examples/transpiled-rust-aws-serverless/`](./examples/transpiled-rust-aws-serverless/)**: Código objetivo transpilado semánticamente a AWS Lambda Rust + Amazon DynamoDB con 14MB de RAM.
+
+---
+
+## ✨ Características Principales
+
+* 🌐 **Soporte Multilingüe (i18n)**: Alterna entre **Español (`ES`)** e **Inglés (`EN`)** en tiempo real.
+* 📁 **Carga de Carpetas Anidadas**: Soporte para soltar carpetas jerárquicas completas (`src/main/java/...`).
+* ⚡ **Refactorización Semántica con AWS Bedrock**: Transpilación asíncrona mediante Claude 3.5 Sonnet.
+* 🔍 **Editor Lado a Lado & Grafo Topológico**: Visualización interactiva del flujo de funciones e infraestructura AWS.
+* 🧪 **Sandbox Diferencial & Cliente HTTP**: Pruebas de equivalencia JSON y simulador estilo Thunder Client.
+* 📊 **Telemetría ROI**: Ahorro del 97% en memoria RAM y 14.2x aceleración en latencia.
+* 📦 **Exportador ZIP**: Descarga en 1-click de la suite completa en Rust con `Cargo.toml`.
